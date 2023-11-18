@@ -1,24 +1,31 @@
 "use client";
 import React from "react";
 import { Nav } from "react-bootstrap";
+import Link from "next/link";
 
 const Pararel_routes_nav = () => {
   return (
-    <Nav variant="pills" activeKey="1">
+    <Nav variant="pills">
       <Nav.Item>
-        <Nav.Link eventKey="1" href="#/home">
-          NavLink 1 content
-        </Nav.Link>
+        <Link href="/paralel_routes/" className="nav-link">
+          Team page
+        </Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="2" title="Item">
-          NavLink 2 content
-        </Nav.Link>
+        <Link href="/paralel_routes" className="nav-link">
+          Analytics page
+        </Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="3" disabled>
-          NavLink 3 content
-        </Nav.Link>
+        <Link href="/paralel_routes/settings" className="nav-link">
+          Analytics/Setting page
+        </Link>
+      </Nav.Item>
+
+      <Nav.Item>
+        <Link href="/paralel_routes/cancelation" className="nav-link">
+          Analytics/cancelation page
+        </Link>
       </Nav.Item>
     </Nav>
   );
