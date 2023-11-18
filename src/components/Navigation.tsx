@@ -52,7 +52,9 @@ const Navigation = () => {
         <Nav.Item as="ul">
           <Link
             href="/student"
-            className={`nav-link ${ActivePage === "/student" ? "text-info" : ""}`}
+            className={`nav-link ${
+              ActivePage === "/student" ? "text-info" : ""
+            }`}
           >
             Student
           </Link>
@@ -60,9 +62,22 @@ const Navigation = () => {
         <Nav.Item as="ul">
           <Link
             href="/Dynamic"
-            className={`nav-link ${ActivePage === "/Dynamic" ? "text-info" : ""}`}
+            className={`nav-link ${
+              ActivePage === "/Dynamic" ? "text-info" : ""
+            }`}
           >
             Dynamic-Routes
+          </Link>
+        </Nav.Item>
+
+        <Nav.Item as="ul">
+          <Link
+            href="/paralel_routes"
+            className={`nav-link ${
+              ActivePage === "/paralel_routes" ? "text-info" : ""
+            }`}
+          >
+            Parallel-Routes
           </Link>
         </Nav.Item>
       </Nav>
