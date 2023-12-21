@@ -48,7 +48,7 @@ const Navigation = () => {
             Shop
           </Link>
         </Nav.Item>
-
+        
         <Nav.Item as="ul">
           <Link
             href="/student"
@@ -57,6 +57,17 @@ const Navigation = () => {
             }`}
           >
             Student
+          </Link>
+        </Nav.Item>
+
+        <Nav.Item as="ul">
+          <Link
+            href="/internationation"
+            className={`nav-link ${
+              ActivePage === "/internationation" ? "text-info" : ""
+            }`}
+          >
+            internationation
           </Link>
         </Nav.Item>
         <Nav.Item as="ul">
