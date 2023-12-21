@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+
+
+export const revalidate = 3600;
+
+
 export default function Home() {
   return (
     <main className="container">
