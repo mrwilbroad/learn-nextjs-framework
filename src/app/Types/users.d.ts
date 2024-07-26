@@ -1,4 +1,4 @@
-export type userstype = {
+export type Frag = {
   id: string;
   name: string;
   username: string;

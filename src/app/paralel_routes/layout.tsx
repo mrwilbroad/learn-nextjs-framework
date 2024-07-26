@@ -18,7 +18,7 @@ const ParallelLayout = ({
   return (
     <div className="container">
       <Pararel_routes_nav />
-      <section className="mt-3"> {children}</section>
+     
       <section>
         <h6>paralle routes here</h6>
         <section className="vstack gap-2">
@@ -26,6 +26,7 @@ const ParallelLayout = ({
             analytics
           }
         </section>
+        <section className="mt-3"> {children}</section>
       </section>
     </div>
   );

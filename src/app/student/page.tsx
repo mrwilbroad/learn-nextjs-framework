@@ -1,57 +1,48 @@
-"use client";
-
 import React from "react";
 import { Table } from "react-bootstrap";
+import Users from "@/lib/Users/User";
 import Link from "next/link";
 
-export type Student = {
-  id: string;
-  name: string;
-  gender: "W" | "M";
-  age: number;
-}
-export type Studenttype = Array<Student>;
-export const StudentData: Studenttype = [
-  {
-    id: "1",
-    name: "Wilbroad",
-    gender: "M",
-    age: 23,
-  },
-  {
-    id: "2",
-    name: "Glory",
-    gender: "W",
-    age: 28,
-  },
-];
-const page = () => {
+
+const page = async () => {
+  const users = await Users();
+
   return (
     <div className="container">
+      <p className="p-3">student details</p>
       <Table striped bordered responsive hover>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Info</th>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Joined at</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
-          {StudentData.map((student, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{student.name}</td>
-              <td>{student.gender}</td>
-              <td>{student.age}</td>
-              <td>
-                <Link className="text-center" href={`/student/${student.id}`}>
-                  View Data
-                </Link>
-              </td>
-            </tr>
-          ))}
+          { Array.isArray(users) && users.length > 0 &&
+            users.map((user, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.created_at}</td>
+                  <td>
+                    <Link href={`student/${user.id}`}>
+                      <button className="btn btn-outline-success ">view</button>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+            {
+              !Array.isArray(users) &&
+              <tr>
+                <td colSpan={100} className="text-center">No data to display</td>
+              </tr> 
+            }
         </tbody>
       </Table>
     </div>
