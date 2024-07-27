@@ -4,13 +4,22 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Nav } from "react-bootstrap";
+import { auth, signOut } from "@/lib/auth";
+import { AuthError } from "next-auth";
+import { useSession } from "next-auth/react";
 
 const Navigation = () => {
   const ActivePage = usePathname();
-  useEffect(() => {});
+  const session = useSession();
+ 
+
+  useState(()=> {
+    console.log(session);
+  },[])
 
   return (
     <header className="container">
+       
       <Nav as="nav" className="justify-content-center border">
         <Nav.Item as="ul">
           <Link
@@ -23,7 +32,7 @@ const Navigation = () => {
 
         <Nav.Item as="ul">
           <Link
-            href="/contact"
+            href="/dashboard/contact"
             className={`nav-link ${
               ActivePage === "/contact" ? "text-info" : ""
             }`}
@@ -34,7 +43,7 @@ const Navigation = () => {
 
         <Nav.Item as="ul">
           <Link
-            href="/about"
+            href="/dashboard/about"
             className={`nav-link ${ActivePage === "/about" ? "text-info" : ""}`}
           >
             About
@@ -42,7 +51,7 @@ const Navigation = () => {
         </Nav.Item>
         <Nav.Item as="ul">
           <Link
-            href="/shop"
+            href="/dashboard/shop"
             className={`nav-link ${ActivePage === "/shop" ? "text-info" : ""}`}
           >
             Shop
@@ -51,7 +60,7 @@ const Navigation = () => {
         
         <Nav.Item as="ul">
           <Link
-            href="/student"
+            href="/dashboard/student"
             className={`nav-link ${
               ActivePage === "/student" ? "text-info" : ""
             }`}
@@ -62,7 +71,7 @@ const Navigation = () => {
 
         <Nav.Item as="ul">
           <Link
-            href="/internationation"
+            href="/dashboard/internationation"
             className={`nav-link ${
               ActivePage === "/internationation" ? "text-info" : ""
             }`}
@@ -72,7 +81,7 @@ const Navigation = () => {
         </Nav.Item>
         <Nav.Item as="ul">
           <Link
-            href="/Dynamic"
+            href="/dashboard/Dynamic"
             className={`nav-link ${
               ActivePage === "/Dynamic" ? "text-info" : ""
             }`}
@@ -82,16 +91,26 @@ const Navigation = () => {
         </Nav.Item>
 
         <Nav.Item as="ul">
-          <Link
-            href="/paralel_routes"
+            <section className="vstack gap-1">
+            <Link
+            href="/dashboard/paralel_routes"
             className={`nav-link ${
               ActivePage === "/paralel_routes" ? "text-info" : ""
             }`}
           >
             Parallel-Routes
           </Link>
+         <section className="vstack gap-3">
+         <p className="m-0 p-0 small fw-bold">Signin as :{session.data?.user?.email}</p>
+           <button type="button" className="btn btn-sm btn-success">sign-out</button>
+         </section>
+            </section>
         </Nav.Item>
+
+        
+          
       </Nav>
+      
     </header>
   );
 };

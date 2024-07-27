@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { type Employee } from "./../Types/Employee";
+import { type Employee } from "../Types/Employee";
 import { Table, Spinner } from "react-bootstrap";
 import Link from "next/link";
 

@@ -1,33 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
+import NextAuth, { AuthError } from "next-auth";
+import { signIn, User } from "@/lib/auth";
+
+interface LoginData 
+{
+  email : string;
+  password : string;
+}
 
 export const POST = async (request: NextRequest) => {
   try {
-    const response = NextResponse.redirect(new URL("/dashboard",request.url));
-    response.cookies.set({
-      name: "Auth-Cookies",
-      value: JSON.stringify({
-        name: "wilbroad",
-        email: "wilbroad123@gmail.com",
-      }),
-      path: "/dashboard"
-    });
+   
+    const formLogin = await request.json();
+    const { email , password} = formLogin
+   await signIn("credentials",{
+    redirect : false,
+    email, password
+   });
 
-    return response;
+       return NextResponse.json({
+        message : "Login succesfull",
+       });
 
-    return NextResponse.json({
-      message: "Login successfull",
-      success: true,
-    });
     
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        error: error.message,
-        message: "something went wrong ...",
-      },
-      {
-        status: 500,
-      }
-    );
+  } catch (error) {
+
+    if(error instanceof AuthError)
+    {
+      return NextResponse.json({
+        email : "username and password are incorect"
+      },{
+        status : 403
+      })
+
+    }else {
+      return NextResponse.json({
+        message : "Please try again!"
+      })
+    }
   }
 };
