@@ -1,21 +1,42 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Nav } from "react-bootstrap";
-import { auth, signOut } from "@/lib/auth";
+import { auth, signOut } from "../../auth";
 import { AuthError } from "next-auth";
 import { useSession } from "next-auth/react";
+import axios from "axios";
 
 const Navigation = () => {
   const ActivePage = usePathname();
-  const session = useSession();
- 
+  const { data : session} = useSession({
+    required : true,
+    onUnauthenticated() {
+         redirect("/auth/login");
+    },
+  });
+  
+  const router = useRouter();
 
-  useState(()=> {
-    console.log(session);
-  },[])
+  useEffect(()=> {},[session]);
+
+ 
+     const SignOut = async()=>
+      {
+          axios.post("/api/auth/logout",null,{
+            headers : {
+              "Content-Type" : "application/json"
+            }
+          }).then(res=> {
+            console.log(res);
+            router.replace("/auth/login");
+          })
+          .catch(er=> {
+            console.log(er)
+          })
+      } 
 
   return (
     <header className="container">
@@ -101,8 +122,8 @@ const Navigation = () => {
             Parallel-Routes
           </Link>
          <section className="vstack gap-3">
-         <p className="m-0 p-0 small fw-bold">Signin as :{session.data?.user?.email}</p>
-           <button type="button" className="btn btn-sm btn-success">sign-out</button>
+         <p className="m-0 p-0 small fw-bold">Signin as :{session?.user?.email}</p>
+           <button type="button" onClick={SignOut} className="btn btn-sm btn-success">sign-out</button>
          </section>
             </section>
         </Nav.Item>

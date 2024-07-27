@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import NextAuth, { AuthError } from "next-auth";
-import { signIn, User } from "@/lib/auth";
+import { signIn, User } from "../../../../../auth";
 
 interface LoginData 
 {
@@ -13,6 +13,7 @@ export const POST = async (request: NextRequest) => {
    
     const formLogin = await request.json();
     const { email , password} = formLogin
+
    await signIn("credentials",{
     redirect : false,
     email, password

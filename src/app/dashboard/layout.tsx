@@ -1,10 +1,10 @@
 import AuthenticatedRoutes from "@/components/AuthenticatedRoutes";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/lib/auth";
+import { auth } from "../../../auth";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
-import type {User} from "@/lib/auth";
+import type {User} from "../../../auth";
 
 
 interface PageProps {
@@ -14,7 +14,7 @@ interface PageProps {
 const DashboardLayout = async ({ children }: PageProps) => {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user) {
     redirect("/auth/login");
   }
 

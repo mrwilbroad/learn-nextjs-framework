@@ -13,8 +13,8 @@ import {
 import ErrorM from "@/components/formik/ErrorM";
 import { Button, Spinner } from "react-bootstrap";
 import * as Yup from "yup";
-import { auth, signIn } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { auth, signIn } from "../../../../auth";
+import { redirect, useRouter } from "next/navigation";
 import { AuthError, CredentialsSignin } from "next-auth";
 
 
@@ -28,7 +28,7 @@ export interface keyValue
 const LoginPage = () => {
 
    
-
+    const router = useRouter();
 
   const InitialValues = {
     email: "",
@@ -36,20 +36,31 @@ const LoginPage = () => {
   };
 
   type InitVType = typeof InitialValues;
-  const HandleSubmit = (
+  const HandleSubmit = async(
     values: InitVType,
     { setSubmitting, resetForm , ...props }: FormikHelpers<InitVType>
   ) => {
 
-    
+    // try {
+    //   await signIn('credentials', {
+    //     email: values.email,
+    //     password: values.password,
+    //     redirect: true,
+    //   })
+    // } catch (err) {
+    //   console.log('error login form' + err)
+    // }
 
+
+        
     axios.post("/api/auth/login", JSON.stringify(values), {
       headers: {
            "Content-Type": "application/json",
           },
     })
      .then((res)=> {
-      console.log(res);
+     router.replace("/dashboard");
+         
     })
     .catch((er)=> {
        const Err = er as AxiosError;
@@ -72,22 +83,7 @@ const LoginPage = () => {
       setSubmitting(false);
     });
 
-    // axios("/api/auth/login", {
-    //   method: "post",
-    //   data: JSON.stringify(values),
-    //   headers: {
-    //     "Content-Type": "maltipart/form-data",
-    //   },
-    // })
-    // .then((res)=> {
-    //   console.log(res);
-    // })
-    // .catch((er)=> {
-    //   console.log(er);
-    // })
-    // .finally(()=> {
-    //   setSubmitting(false);
-    // });
+    
   };
 
 
@@ -107,7 +103,7 @@ const LoginPage = () => {
         <Card.Header>Login</Card.Header>
         <Card.Body>
           <Formik
-            // validationSchema={ValiScheme}
+            validationSchema={ValiScheme}
             initialValues={InitialValues}
             onSubmit={HandleSubmit}
           >

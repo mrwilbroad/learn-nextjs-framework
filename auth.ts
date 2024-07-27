@@ -1,8 +1,7 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
 import credentials from "next-auth/providers/credentials";
-import { authConfig } from "@/auth.config";
-
+import { authConfig } from "./auth.config";
 
 export interface User {
   firstname: string;
@@ -30,34 +29,41 @@ const FakeUsers: User[] = [
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    ...authConfig,
+  ...authConfig,
   providers: [
     credentials({
-        
       credentials: {
         email: {},
         password: {},
       },
       authorize: async (credentials) => {
+
         try {
-            
+          console.log("LOGG")
           // fetch user with some credential aligned and Procedd to verify
           const user = FakeUsers.find(
             (user) =>
               user.email == credentials.email &&
               user.password == credentials.password
           );
-          console.log("USER : ",user);
+         
+          console.log("USER : ", user);
 
           return user || null;
         } catch (error) {
-            console.log(error)
+          console.log(error);
           return null;
         }
-      },    
+      },
       
     }),
   ],
-
+  pages : {
+    signIn : "/auth/login",
+  },
+  callbacks: {
+    jwt: async ({ user, token }) => {
+      return token;
+    },
+  },
 });
-
